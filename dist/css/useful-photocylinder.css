@@ -1,0 +1,271 @@
+/*
+Constants
+*/
+/*
+Hides text in the margin
+*/
+/*
+Turns a button into an icon
+*/
+/*
+Centres a graphic or glyph inside an icon
+*/
+/*
+Offers both the pixel and rem value of a single property
+*/
+/*
+Offers both the pixel and rem values of a shorthand property
+*/
+/*
+Offers the text size as both the pixel and rem value
+*/
+/*
+Adds vendor prefixed to a property
+*/
+/*
+Applies the "clearfix" hack to a container with floating content
+*/
+/*
+	Photo Cylinder
+*/
+@media all {
+  /*
+		example container
+	*/
+  #photocylinder {
+    margin: 0;
+    padding: 0;
+    position: relative; }
+    #photocylinder * {
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -ms-interpolation-mode: bicubic; }
+    #photocylinder li {
+      display: inline;
+      margin: 0;
+      padding: 0; }
+      #photocylinder li img {
+        margin-top: 0px;
+        margin-top: 0rem;
+        margin-right: 0px;
+        margin-right: 0rem;
+        margin-bottom: 3.96px;
+        margin-bottom: 0.33rem;
+        margin-left: 0px;
+        margin-left: 0rem;
+        display: inline-block;
+        height: 96px;
+        width: auto;
+        vertical-align: top; }
+  /*
+		3d stage
+
+		tan A = Y / X
+		tan(22.5) = 300 / X
+		tan(22.5) / 300 = 1 / X
+		300 / tan(22.5) = X
+
+		Z = 1.207106781186548 * X
+
+		scale = aspect * (360 / fov) * 0.3
+
+		translateZ(calc(-1.207106781186548 * 500px + 2px))
+
+		translateZ(-601.553390593274px)
+	*/
+  .photo-cylinder {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 0; }
+    .photo-cylinder img {
+      visibility: hidden;
+      width: 100%;
+      height: auto; }
+    .photo-cylinder .pc-obj {
+      position: absolute;
+      width: 500px;
+      height: 1200px;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(1);
+      -webkit-perspective: 500px;
+      perspective: 500px; }
+    .photo-cylinder .pc-obj-row {
+      width: 100%;
+      height: 100%;
+      -webkit-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      position: relative; }
+    .photo-cylinder .pc-obj-col {
+      background-size: 800% auto;
+      background-position: 0 50%;
+      background-repeat: no-repeat;
+      display: block;
+      position: absolute;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      -webkit-perspective-origin: 50% 50%;
+      perspective-origin: 50% 50%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      width: 100%;
+      height: 100%; }
+    .photo-cylinder .pc-obj-col-0 {
+      -webkit-transform: rotateY(0deg) translateZ(-601.55339px);
+      transform: rotateY(0deg) translateZ(-601.55339px);
+      background-position: 0 50%; }
+    .photo-cylinder .pc-obj-col-1 {
+      -webkit-transform: rotateY(-45deg) translateZ(-601.55339px);
+      transform: rotateY(-45deg) translateZ(-601.55339px);
+      background-position: -500px 50%; }
+    .photo-cylinder .pc-obj-col-2 {
+      -webkit-transform: rotateY(-90deg) translateZ(-601.55339px);
+      transform: rotateY(-90deg) translateZ(-601.55339px);
+      background-position: -1000px 50%; }
+    .photo-cylinder .pc-obj-col-3 {
+      -webkit-transform: rotateY(-135deg) translateZ(-601.55339px);
+      transform: rotateY(-135deg) translateZ(-601.55339px);
+      background-position: -1500px 50%; }
+    .photo-cylinder .pc-obj-col-4 {
+      -webkit-transform: rotateY(-180deg) translateZ(-601.55339px);
+      transform: rotateY(-180deg) translateZ(-601.55339px);
+      background-position: -2000px 50%; }
+    .photo-cylinder .pc-obj-col-5 {
+      -webkit-transform: rotateY(-225deg) translateZ(-601.55339px);
+      transform: rotateY(-225deg) translateZ(-601.55339px);
+      background-position: -2500px 50%; }
+    .photo-cylinder .pc-obj-col-6 {
+      -webkit-transform: rotateY(-270deg) translateZ(-601.55339px);
+      transform: rotateY(-270deg) translateZ(-601.55339px);
+      background-position: -3000px 50%; }
+    .photo-cylinder .pc-obj-col-7 {
+      -webkit-transform: rotateY(-315deg) translateZ(-601.55339px);
+      transform: rotateY(-315deg) translateZ(-601.55339px);
+      background-position: -3500px 50%; }
+    .photo-cylinder.pc-fallback img {
+      visibility: visible;
+      height: 100%;
+      width: auto;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%) scale(1, 1);
+      transform: translate(-50%, -50%) scale(1, 1); }
+  .photo-cylinder.pc-180 .pc-obj-col {
+    background-size: 400% auto; }
+  .photo-cylinder.pc-360 .pc-obj-col {
+    background-size: 800% auto; }
+  /*
+		popup styles
+	*/
+  .photocylinder-popup {
+    -webkit-transition: opacity ease 500ms;
+    transition: opacity ease 500ms;
+    background: rgba(0, 0, 0, 0.9);
+    background: #000\9;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    z-index: 20000; }
+    .photocylinder-popup.photocylinder-busy-fixed {
+      position: fixed; }
+    .photocylinder-popup * {
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -ms-interpolation-mode: bicubic; }
+    .photocylinder-popup .photocylinder-closer,
+    .photocylinder-popup .photocylinder-locator {
+      overflow: hidden;
+      position: relative;
+      text-align: left;
+      text-indent: 58px;
+      white-space: nowrap;
+      /* Because of Internet Explorer 8 we can't have nice thing. */
+      overflow: visible;
+      text-indent: -999em;
+      width: 36px;
+      width: 3rem;
+      height: 36px;
+      height: 3rem;
+      right: 12px;
+      right: 1rem;
+      top: 12px;
+      top: 1rem;
+      background: #000086;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      position: absolute;
+      text-align: center;
+      text-decoration: none;
+      z-index: 2; }
+      .photocylinder-popup .photocylinder-closer:before,
+      .photocylinder-popup .photocylinder-locator:before {
+        content: "";
+        display: block;
+        font-family: FontAwesome;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        margin-left: -12px;
+        margin-top: -12px;
+        width: 24px;
+        position: absolute;
+        left: 50%;
+        text-align: center;
+        top: 50%;
+        background-image: url("../img/close.svg");
+        background-size: 24px 24px; }
+      .photocylinder-popup .photocylinder-closer:hover,
+      .photocylinder-popup .photocylinder-locator:hover {
+        background: #ff9800; }
+    .photocylinder-popup .photocylinder-locator {
+      right: 60px;
+      right: 5rem;
+      display: none; }
+      .photocylinder-popup .photocylinder-locator:before {
+        background-image: url("../img/map_2.svg"); }
+  .photocylinder-popup-passive {
+    opacity: 0;
+    -webkit-opacity: 0;
+    visibility: hidden\9; }
+  .photocylinder-popup-active {
+    opacity: 1;
+    -webkit-opacity: 1;
+    visibility: visible\9; }
+  /*
+		busy spinner
+	*/
+  .photocylinder-busy {
+    border-radius: 5px;
+    opacity: 0.8;
+    -webkit-opacity: 0.8;
+    background: #000 url("../img/busy.gif") no-repeat 50% 50%;
+    height: 48px;
+    left: 50%;
+    margin: -24px;
+    position: absolute;
+    top: 50%;
+    width: 48px;
+    z-index: 20001; }
+    .photocylinder-busy.photocylinder-busy-fixed {
+      position: fixed; }
+  .photocylinder-busy-passive {
+    visibility: hidden; }
+  .photocylinder-busy-active {
+    visibility: visible; } }
+
+@media (orientation: portrait) {
+  .photocylinder-popup .photocylinder-locator {
+    display: block; } }

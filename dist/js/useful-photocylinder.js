@@ -746,11 +746,11 @@ useful.Photocylinder.prototype.Fallback = function (parent) {
 		// add touch controls
 		this.wrapper.addEventListener('touchstart', this.touch.bind(this, 'start'));
 		this.wrapper.addEventListener('touchmove', this.touch.bind(this, 'move'));
-		document.addEventListener('touchend', this.touch.bind(this, 'end'));
+		this.wrapper.addEventListener('touchend', this.touch.bind(this, 'end'));
 		// add mouse controls
 		this.wrapper.addEventListener('mousedown', this.touch.bind(this, 'start'));
 		this.wrapper.addEventListener('mousemove', this.touch.bind(this, 'move'));
-		document.addEventListener('mouseup', this.touch.bind(this, 'end'));
+		this.wrapper.addEventListener('mouseup', this.touch.bind(this, 'end'));
 		this.wrapper.addEventListener('mousewheel', this.wheel.bind(this), false);
 	    this.wrapper.addEventListener('DOMMouseScroll', this.wheel.bind(this), false);
 	};
@@ -1214,11 +1214,11 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 		// add touch controls
 		this.wrapper.addEventListener('touchstart', this.touch.bind(this, 'start'));
 		this.wrapper.addEventListener('touchmove', this.touch.bind(this, 'move'));
-		document.addEventListener('touchend', this.touch.bind(this, 'end'));
+		this.wrapper.addEventListener('touchend', this.touch.bind(this, 'end'));
 		// add mouse controls
 		this.wrapper.addEventListener('mousedown', this.touch.bind(this, 'start'));
 		this.wrapper.addEventListener('mousemove', this.touch.bind(this, 'move'));
-		document.addEventListener('mouseup', this.touch.bind(this, 'end'));
+		this.wrapper.addEventListener('mouseup', this.touch.bind(this, 'end'));
 		this.wrapper.addEventListener('mousewheel', this.wheel.bind(this), false);
 	    this.wrapper.addEventListener('DOMMouseScroll', this.wheel.bind(this), false);
 	};

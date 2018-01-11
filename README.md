@@ -1,4 +1,4 @@
-# useful.photoshere.js: Projected Cylindrical Image
+# useful.photocylinder.js: Projected Cylindrical Image
 
 Displays a cylindrical projection of a panoramic image.
 

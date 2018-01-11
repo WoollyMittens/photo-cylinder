@@ -41,8 +41,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		this.popup.show();
 		// insert the viewer
 		// TODO: MSIE and law FOV should default to fallback
-		console.log('navigator.userAgent', navigator.userAgent);
-		this.stage = (true || /msie|edge/i.test(navigator.userAgent) || !/_r\d{3}/.test(url)) ? new this.context.Fallback(this) : new this.context.Stage(this);
+		this.stage = (/msie|edge/i.test(navigator.userAgent) || !/_r\d{3}/.test(url)) ? new this.context.Fallback(this) : new this.context.Stage(this);
 		this.stage.init();
 		// hide the busy indicator
 		this.busy.hide();

@@ -34,6 +34,8 @@
 	/*
 		3d stage
 
+		The base size of the calculations was arbitrarily picked as 500, but the resulting projection can be arbitrarily large.
+
 		tan A = Y / X
 		tan(22.5) = 300 / X
 		tan(22.5) / 300 = 1 / X

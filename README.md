@@ -1,40 +1,35 @@
-# useful.photozoom.js: Photo Zoom
+# useful.photoshere.js: Projected Cylindrical Image
 
-Overlays a full screen preview of a thumbnail.
+Displays a cylindrical projection of a panoramic image.
 
-Try the <a href="http://www.woollymittens.nl/default.php?url=useful-photozoom">demo</a>.
+Try the <a href="http://www.woollymittens.nl/default.php?url=useful-photocylinder">demo</a>.
 
 ## How to include the script
 
 The stylesheet is best included in the header of the document.
 
 ```html
-<link rel="stylesheet" href="./css/useful-photozoom.css"/>
+<link rel="stylesheet" href="./css/useful-photocylinder.css"/>
 ```
 
 This include can be added to the header or placed inline before the script is invoked.
 
 ```html
-<script src="./js/useful-photozoom.js"></script>
-```
-
-To enable the use of HTML5 tags in Internet Explorer 8 and lower, include *html5.js*.
-
-```html
-<!--[if lte IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
+<script src="./js/useful-photocylinder.js"></script>
 ```
 
 ## How to start the script
 
 ```javascript
-var photozoom = new useful.Photozoom().init({
-	'elements' : document.querySelectorAll('#photozoom a'),
+var photoCylinder = new useful.photocylinder().init({
+	// target elements
+	'elements': document.querySelectorAll('#photocylinder a'),
+	// restrict the popup to a container
 	'container' : document.body,
-	'zoom' : 2,
-	'sizer' : 'php/imagesize.php?src=../{src}',
+	// optional webservice for acquiring sized images
 	'slicer' : 'php/imageslice.php?src=../{src}&{size}',
+	// rotation speed when idle
+	'idle': 0.1
 });
 ```
 
@@ -42,29 +37,9 @@ var photozoom = new useful.Photozoom().init({
 
 **'container' : {element}** - Restrict the popup to a container.
 
-**'zoom' : {number}** - Maximum zoom factor for the touch controls.
-
-**'sizer' : {string}** - Optional web-service for measuring images. An example is provided as *./php/imagesize.php*.
-
 **'slicer' : {string}** - Optional web-service for resizing images. An example is provided as *./php/imageslice.php*.
 
-## How to control the script
-
-### Open
-
-```javascript
-photozoom.show();
-```
-
-Shows the popup belonging to instance.
-
-### Close
-
-```javascript
-photozoom.hide();
-```
-
-Hides the popup.
+**idle : {float}** - The steps in degrees to rotate when idle.
 
 ## How to build the script
 
@@ -78,7 +53,7 @@ The following commands are available for development:
 + `gulp dev` - Builds the project for development purposes.
 + `gulp dist` - Builds the project for deployment purposes.
 + `gulp watch` - Continuously recompiles updated files during development sessions.
-+ `gulp serve` - Serves the project on a temporary www server at http://localhost:8500/.
++ `gulp serve` - Serves the project on a temporary web server at http://localhost:8500/.
 + `gulp php` - Serves the project on a temporary php server at http://localhost:8500/.
 
 ## License

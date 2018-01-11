@@ -620,7 +620,7 @@ var useful = useful || {};
 
 /*
 	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Projected Cylindrical Projection", version 20180102, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
@@ -670,7 +670,7 @@ if (typeof module !== 'undefined') {
 
 /*
 	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Projected Cylindrical Projection", version 20180102, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
@@ -885,7 +885,7 @@ if (typeof module !== 'undefined') {
 
 /*
 	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Projected Cylindrical Projection", version 20180102, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
@@ -985,7 +985,7 @@ if (typeof module !== 'undefined') {
 
 /*
 	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Projected Cylindrical Projection", version 20180102, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
@@ -1111,7 +1111,7 @@ if (typeof module !== 'undefined') {
 
 /*
 	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Projected Cylindrical Projection", version 20180102, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
@@ -1354,7 +1354,7 @@ if (typeof module !== 'undefined') {
 
 /*
 	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Projected Cylindrical Projection", version 20180102, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.

@@ -26,16 +26,24 @@ var photoCylinder = new useful.photocylinder().init({
 	'elements': document.querySelectorAll('#photocylinder a'),
 	// restrict the popup to a container
 	'container' : document.body,
+	// file name check for spherical projections
+	'spherical' : /fov360/,
+	// file name check for cylindrical projections
+	'cylindrical' : /fov180/,
 	// optional webservice for acquiring sized images
 	'slicer' : 'php/imageslice.php?src=../{src}&{size}',
 	// rotation speed when idle
-	'idle': 0.1
+	'idle': 0.002
 });
 ```
 
 **'elements' : {array}** - A collection of target elements.
 
 **'container' : {element}** - Restrict the popup to a container.
+
+**'spherical' : {regexp}** - File name check for spherical projections.
+
+**'cylindrical' : {regexp}** - File name check for cylindrical projections.
 
 **'slicer' : {string}** - Optional web-service for resizing images. An example is provided as *./php/imageslice.php*.
 

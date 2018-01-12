@@ -699,7 +699,7 @@ useful.Photocylinder.prototype.Fallback = function (parent) {
 	this.horizontal = {};
 	this.vertical = {};
 	this.tracked = null;
-	this.increment = this.config.idle / 200;
+	this.increment = this.config.idle / 2;
 	this.auto = true;
 
 	// METHODS
@@ -739,7 +739,7 @@ useful.Photocylinder.prototype.Fallback = function (parent) {
 		// set the initial zoom
 		this.resize();
 		// if the image is wide enough, start the idle animation
-		if (this.imageAspect - this.wrapperAspect > 1) this.animate();
+		if (this.imageAspect - this.wrapperAspect >= 1) this.animate();
 	};
 
 	this.controls = function() {
@@ -805,8 +805,8 @@ useful.Photocylinder.prototype.Fallback = function (parent) {
 		// if animation is allowed
 		if (this.auto) {
 			// in 180 degree pictures adjust increment and reverse, otherwise loop forever
-			if (this.horizontal.current + this.increment * 2 > this.horizontal.max) this.increment = -this.config.idle / 200;
-			if (this.horizontal.current + this.increment * 2 < this.horizontal.min) this.increment = this.config.idle / 200;
+			if (this.horizontal.current + this.increment * 2 > this.horizontal.max) this.increment = -this.config.idle / 2;
+			if (this.horizontal.current + this.increment * 2 < this.horizontal.min) this.increment = this.config.idle / 2;
 			var step = this.horizontal.current + this.increment;
 			// advance rotation incrementally, until interrupted
 			this.move(step, this.vertical.current);
@@ -906,7 +906,10 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 	this.element = config.element;
 	this.config = {
 		'container': document.body,
-		'slicer': '{src}'
+		'spherical' : /fov360/,
+		'cylindrical' : /fov180/,
+		'slicer': '{src}',
+		'idle': 0.1
 	};
 
 	for (name in config) {
@@ -924,9 +927,8 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		// show the popup
 		this.popup = new this.context.Popup(this);
 		this.popup.show();
-		// insert the viewer
-		// TODO: MSIE and law FOV should default to fallback
-		this.stage = (/msie|edge/i.test(navigator.userAgent) || !/_r\d{3}/.test(url)) ? new this.context.Fallback(this) : new this.context.Stage(this);
+		// insert the viewer, but MSIE and low FOV should default to fallback
+		this.stage = (!/msie|edge/i.test(navigator.userAgent) && (this.config.spherical.test(url) || this.config.cylindrical.test(url))) ? new this.context.Stage(this) : new this.context.Fallback(this);
 		this.stage.init();
 		// hide the busy indicator
 		this.busy.hide();
@@ -1187,7 +1189,7 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 	this.render = function() {
 		// retrieve the field of view from the image source
 		var url = this.image.getAttribute('src');
-		this.fov = /_r360/.test(url) ? 360 : 180;
+		this.fov = this.config.spherical.test(url) ? 360 : 180;
 		// get the aspect ratio from the image
 		this.imageAspect = this.image.offsetWidth / this.image.offsetHeight;
 		// get the field of view property or guess one

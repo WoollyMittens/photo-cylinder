@@ -21,7 +21,10 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 	this.element = config.element;
 	this.config = {
 		'container': document.body,
-		'slicer': '{src}'
+		'spherical' : /fov360/,
+		'cylindrical' : /fov180/,
+		'slicer': '{src}',
+		'idle': 0.1
 	};
 
 	for (name in config) {
@@ -39,9 +42,8 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		// show the popup
 		this.popup = new this.context.Popup(this);
 		this.popup.show();
-		// insert the viewer
-		// TODO: MSIE and law FOV should default to fallback
-		this.stage = (/msie|edge/i.test(navigator.userAgent) || !/_r\d{3}/.test(url)) ? new this.context.Fallback(this) : new this.context.Stage(this);
+		// insert the viewer, but MSIE and low FOV should default to fallback
+		this.stage = (!/msie|edge/i.test(navigator.userAgent) && (this.config.spherical.test(url) || this.config.cylindrical.test(url))) ? new this.context.Stage(this) : new this.context.Fallback(this);
 		this.stage.init();
 		// hide the busy indicator
 		this.busy.hide();

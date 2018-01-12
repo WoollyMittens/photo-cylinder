@@ -77,7 +77,7 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 	this.render = function() {
 		// retrieve the field of view from the image source
 		var url = this.image.getAttribute('src');
-		this.fov = /_r360/.test(url) ? 360 : 180;
+		this.fov = this.config.spherical.test(url) ? 360 : 180;
 		// get the aspect ratio from the image
 		this.imageAspect = this.image.offsetWidth / this.image.offsetHeight;
 		// get the field of view property or guess one

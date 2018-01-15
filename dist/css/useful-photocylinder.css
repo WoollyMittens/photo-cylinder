@@ -80,26 +80,21 @@ Applies the "clearfix" hack to a container with floating content
     height: 100%;
     position: relative;
     overflow: hidden;
-    margin: 0; }
+    margin: 0;
+    -webkit-perspective: 500px;
+    perspective: 500px; }
     .photo-cylinder img {
       visibility: hidden;
       width: 100%;
       height: auto; }
-    .photo-cylinder .pc-obj {
+    .photo-cylinder .pc-obj-row {
       position: absolute;
-      width: 500px;
-      height: 1200px;
       top: 50%;
       left: 50%;
-      -webkit-transform: translate(-50%, -50%) scale(1);
-      transform: translate(-50%, -50%) scale(1);
-      -webkit-perspective: 500px;
-      perspective: 500px; }
-    .photo-cylinder .pc-obj-row {
-      width: 100%;
-      height: 100%;
-      -webkit-transform: rotateY(0deg);
-      transform: rotateY(0deg);
+      width: 500px;
+      height: 1200px;
+      -webkit-transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+      transform: translate(-50%, -50%) scale(1) rotateY(0deg);
       -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
       position: relative; }

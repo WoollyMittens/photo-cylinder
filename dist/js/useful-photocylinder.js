@@ -423,6 +423,200 @@ var useful = useful || {};
 
 })();
 
+/*
+	Source:
+	van Creij, Maurice (2014). "useful.requests.js: A library of useful functions to ease working with AJAX and JSON.", version 20141127, http://www.woollymittens.nl/.
+
+	License:
+	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
+*/
+
+// public object
+var useful = useful || {};
+
+(function(){
+
+	// Invoke strict mode
+	"use strict";
+
+	// Create a private object for this library
+	useful.request = {
+
+		// adds a random argument to the AJAX URL to bust the cache
+		randomise : function (url) {
+			return url.replace('?', '?time=' + new Date().getTime() + '&');
+		},
+
+		// perform all requests in a single application
+		all : function (queue, results) {
+			// set up storage for the results
+			var _this = this, _url = queue.urls[queue.urls.length - 1], _results = results || [];
+			// perform the first request in the queue
+			this.send({
+				url : _url,
+				post : queue.post || null,
+				contentType : queue.contentType || 'text/xml',
+				timeout : queue.timeout || 4000,
+				onTimeout : queue.onTimeout || function (reply) { return reply; },
+				onProgress : function (reply) {
+					// report the fractional progress of the whole queue
+					queue.onProgress({});
+				},
+				onFailure : queue.onFailure || function (reply) { return reply; },
+				onSuccess : function (reply) {
+					// store the results
+					_results.push({
+						'url' : _url,
+						'response' : reply.response,
+						'responseText' : reply.responseText,
+						'responseXML' : reply.responseXML,
+						'status' : reply.status,
+					});
+					// pop one request off the queue
+					queue.urls.length = queue.urls.length - 1;
+					// if there are more items in the queue
+					if (queue.urls.length > 0) {
+						// perform the next request
+						_this.all(queue, _results);
+					// else
+					} else {
+						// trigger the success handler
+						queue.onSuccess(_results);
+					}
+				}
+			});
+		},
+
+		// create a request that is compatible with the browser
+		create : function (properties) {
+			var serverRequest,
+				_this = this;
+			// create a microsoft only xdomain request
+			if (window.XDomainRequest && properties.xdomain) {
+				// create the request object
+				serverRequest = new XDomainRequest();
+				// add the event handler(s)
+				serverRequest.onload = function () { properties.onSuccess(serverRequest, properties); };
+				serverRequest.onerror = function () { properties.onFailure(serverRequest, properties); };
+				serverRequest.ontimeout = function () { properties.onTimeout(serverRequest, properties); };
+				serverRequest.onprogress = function () { properties.onProgress(serverRequest, properties); };
+			}
+			// or create a standard HTTP request
+			else if (window.XMLHttpRequest) {
+				// create the request object
+				serverRequest = new XMLHttpRequest();
+				// set the optional timeout if available
+				if (serverRequest.timeout) { serverRequest.timeout = properties.timeout || 0; }
+				// add the event handler(s)
+				serverRequest.ontimeout = function () { properties.onTimeout(serverRequest, properties); };
+				serverRequest.onreadystatechange = function () { _this.update(serverRequest, properties); };
+			}
+			// or use the fall back
+			else {
+				// create the request object
+				serverRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				// add the event handler(s)
+				serverRequest.onreadystatechange = function () { _this.update(serverRequest, properties); };
+			}
+			// return the request object
+			return serverRequest;
+		},
+
+		// perform and handle an AJAX request
+		send : function (properties) {
+			// add any event handlers that weren't provided
+			properties.onSuccess = properties.onSuccess || function () {};
+			properties.onFailure = properties.onFailure || function () {};
+			properties.onTimeout = properties.onTimeout || function () {};
+			properties.onProgress = properties.onProgress || function () {};
+			// create the request object
+			var serverRequest = this.create(properties);
+			// if the request is a POST
+			if (properties.post) {
+				try {
+					// open the request
+					serverRequest.open('POST', properties.url, true);
+					// set its header
+					serverRequest.setRequestHeader("Content-type", properties.contentType || "application/x-www-form-urlencoded");
+					// send the request, or fail gracefully
+					serverRequest.send(properties.post);
+				}
+				catch (errorMessage) { properties.onFailure({ readyState : -1, status : -1, statusText : errorMessage }); }
+			// else treat it as a GET
+			} else {
+				try {
+					// open the request
+					serverRequest.open('GET', this.randomise(properties.url), true);
+					// send the request
+					serverRequest.send();
+				}
+				catch (errorMessage) { properties.onFailure({ readyState : -1, status : -1, statusText : errorMessage }); }
+			}
+		},
+
+		// regularly updates the status of the request
+		update : function (serverRequest, properties) {
+			// react to the status of the request
+			if (serverRequest.readyState === 4) {
+				switch (serverRequest.status) {
+					case 200 :
+						properties.onSuccess(serverRequest, properties);
+						break;
+					case 304 :
+						properties.onSuccess(serverRequest, properties);
+						break;
+					default :
+						properties.onFailure(serverRequest, properties);
+				}
+			} else {
+				properties.onProgress(serverRequest, properties);
+			}
+		},
+
+		// turns a string back into a DOM object
+		deserialize : function (text) {
+			var parser, xmlDoc;
+			// if the DOMParser exists
+			if (window.DOMParser) {
+				// parse the text as an XML DOM
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString(text, "text/xml");
+			// else assume this is Microsoft doing things differently again
+			} else {
+				// parse the text as an XML DOM
+				xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				xmlDoc.async = "false";
+				xmlDoc.loadXML(text);
+			}
+			// return the XML DOM object
+			return xmlDoc;
+		},
+
+		// turns a json string into a JavaScript object
+		decode : function (text) {
+			var object;
+			object = {};
+			// if JSON.parse is available
+			if (typeof JSON !== 'undefined' && typeof JSON.parse !== 'undefined') {
+				// use it
+				object = JSON.parse(text);
+			// if jQuery is available
+			} else if (typeof jQuery !== 'undefined') {
+				// use it
+				object = jQuery.parseJSON(text);
+			}
+			// return the object
+			return object;
+		}
+
+	};
+
+	// return as a require.js module
+	if (typeof module !== 'undefined') {
+		exports = module.exports = useful.request;
+	}
+
+})();
 
 /*
 	Source:
@@ -766,6 +960,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		'container': document.body,
 		'spherical' : /fov360/,
 		'cylindrical' : /fov180/,
+		'standalone': false,
 		'slicer': '{src}',
 		'idle': 0.1
 	};
@@ -782,20 +977,26 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 	};
 
 	this.success = function(url) {
+		var config = this.config;
+		// hide the busy indicator
+		this.busy.hide();
 		// check if the aspect ratio of the image can be determined
-		var image = this.config.image;
+		var image = config.image;
 		var isWideEnough = (image.naturalWidth && image.naturalHeight && image.naturalWidth / image.naturalHeight > 3);
-		// show the popup
-		this.popup = new this.context.Popup(this);
-		this.popup.show();
+		// show the popup, or use the container directly
+		if (config.standalone) {
+			config.popup = config.container;
+			config.popup.innerHTML = '';
+		} else {
+			this.popup = new this.context.Popup(this);
+			this.popup.show();
+		}
 		// insert the viewer, but MSIE and low FOV should default to fallback
 		this.stage = (!/msie|trident|edge/i.test(navigator.userAgent) && (this.config.spherical.test(url) || this.config.cylindrical.test(url) || isWideEnough)) ? new this.context.Stage(this) : new this.context.Fallback(this);
 		this.stage.init();
-		// hide the busy indicator
-		this.busy.hide();
-		// resolve the opened promise
-		if (this.config.opened) {
-			this.config.opened(this.config.element);
+		// trigger the success handler
+		if (config.success) {
+			config.success(this.element, config.container);
 		}
 	};
 
@@ -806,14 +1007,20 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		// give up on the popup
 		if (this.popup) {
 			// remove the popup
-			config.container.removeChild(this.popup);
+			config.popup.parentNode.removeChild(config.popup);
 			// remove its reference
 			this.popup = null;
+		}
+		// give up on the stage
+		if (this.stage) {
+			// remove the stage
+			config.stage.parentNode.removeChild(config.stage);
+			// remove the reference
 			this.stage = null;
 		}
-		// trigger the located handler directly
-		if (config.located) {
-			config.located(this.element);
+		// trigger the failure handler
+		if (config.failure) {
+			config.failure(this.element, config.container);
 		}
 		// hide the busy indicator
 		this.busy.hide();
@@ -834,8 +1041,8 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		this.busy = new this.context.Busy(this.config.container);
 		this.busy.show();
 		// create the url for the image sizing webservice
-	    var url = this.config.url || this.element.getAttribute('href') || this.image.getAttribute('src');
-	    var size = (this.config.spherical.test(url)) ? 'height=1080&top=0.2&bottom=0.8' : 'height=1080';
+	  var url = this.config.url || this.element.getAttribute('href') || this.image.getAttribute('src');
+	  var size = (this.config.spherical.test(url)) ? 'height=1080&top=0.2&bottom=0.8' : 'height=1080';
 		// load the image asset
 		this.config.image = new Image();
 		this.config.image.src = this.config.slicer.replace('{src}', url).replace('{size}', size);
@@ -876,11 +1083,12 @@ useful.Photocylinder.prototype.Popup = function(parent) {
 	// METHODS
 
 	this.show = function() {
+		var config = this.config;
 		// if the popup doesn't exist
-		if (!this.config.popup) {
+		if (!config.popup) {
 			// create a container for the popup
-			this.config.popup = document.createElement('figure');
-			this.config.popup.className = (this.config.container === document.body)
+			config.popup = document.createElement('figure');
+			config.popup.className = (config.container === document.body)
 				? 'photocylinder-popup photocylinder-popup-fixed photocylinder-popup-passive'
 				: 'photocylinder-popup photocylinder-popup-passive';
 			// add a close gadget
@@ -888,24 +1096,25 @@ useful.Photocylinder.prototype.Popup = function(parent) {
 			// add a locator gadget
 			this.addLocator();
 			// add the popup to the document
-			this.config.container.appendChild(this.config.popup);
+			config.container.appendChild(config.popup);
 			// reveal the popup when ready
 			setTimeout(this.onShow.bind(this), 0);
 		}
 	};
 
 	this.hide = function() {
+		var config = this.config;
 		// if there is a popup
-		if (this.config.popup) {
+		if (config.popup) {
 			// unreveal the popup
-			this.config.popup.className = this.config.popup.className.replace(/-active/gi, '-passive');
+			config.popup.className = config.popup.className.replace(/-active/gi, '-passive');
 			// and after a while
 			var _this = this;
 			setTimeout(function() {
 				// remove it
-				_this.config.container.removeChild(_this.config.popup);
+				config.container.removeChild(config.popup);
 				// remove its reference
-				_this.config.popup = null;
+				config.popup = null;
 				// ask the parent to self destruct
 				_this.parent.destroy();
 			}, 500);
@@ -913,6 +1122,7 @@ useful.Photocylinder.prototype.Popup = function(parent) {
 	};
 
 	this.addCloser = function() {
+		var config = this.config;
 		// build a close gadget
 		var closer = document.createElement('a');
 		closer.className = 'photocylinder-closer';
@@ -922,12 +1132,13 @@ useful.Photocylinder.prototype.Popup = function(parent) {
 		closer.addEventListener('click', this.onHide.bind(this));
 		closer.addEventListener('touchstart', this.onHide.bind(this));
 		// add the close gadget to the image
-		this.config.popup.appendChild(closer);
+		config.popup.appendChild(closer);
 	};
 
 	this.addLocator = function(url) {
+		var config = this.config;
 		// only add if a handler was specified
-		if (this.config.located) {
+		if (config.located) {
 			// build the geo marker icon
 			var locator = document.createElement('a');
 			locator.className = 'photocylinder-locator';
@@ -937,38 +1148,41 @@ useful.Photocylinder.prototype.Popup = function(parent) {
 			locator.addEventListener('click', this.onLocate.bind(this));
 			locator.addEventListener('touchstart', this.onLocate.bind(this));
 			// add the location marker to the image
-			this.config.popup.appendChild(locator);
+			config.popup.appendChild(locator);
 		}
 	};
 
 	// EVENTS
 
 	this.onShow = function() {
+		var config = this.config;
 		// show the popup
-		this.config.popup.className = this.config.popup.className.replace(/-passive/gi, '-active');
+		config.popup.className = config.popup.className.replace(/-passive/gi, '-active');
 		// trigger the closed event if available
-		if (this.config.opened) {
-			this.config.opened(this.config.element);
+		if (config.opened) {
+			config.opened(config.element);
 		}
 	};
 
 	this.onHide = function(evt) {
+		var config = this.config;
 		// cancel the click
 		evt.preventDefault();
 		// close the popup
 		this.hide();
 		// trigger the closed event if available
-		if (this.config.closed) {
-			this.config.closed(this.config.element);
+		if (config.closed) {
+			config.closed(config.element);
 		}
 	};
 
 	this.onLocate = function(evt) {
+		var config = this.config;
 		// cancel the click
 		evt.preventDefault();
 		// trigger the located event if available
-		if (this.config.located) {
-			this.config.located(this.config.element);
+		if (config.located) {
+			config.located(config.element);
 		}
 	};
 
@@ -999,7 +1213,7 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 	// PROPERTIES
 
 	this.parent = parent;
-    this.config = parent.config;
+  this.config = parent.config;
 	this.popup = this.config.popup;
 	this.image = this.config.image;
 	this.imageAspect = null;
@@ -1056,6 +1270,8 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 		this.wrapper.appendChild(this.image);
 		// insert the object
 		this.popup.appendChild(this.wrapper);
+		// remember the object
+		this.config.stage = this.wrapper;
 	};
 
 	this.render = function() {
@@ -1095,7 +1311,7 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 		this.wrapper.addEventListener('mousemove', this.touch.bind(this, 'move'));
 		this.wrapper.addEventListener('mouseup', this.touch.bind(this, 'end'));
 		this.wrapper.addEventListener('mousewheel', this.wheel.bind(this));
-	    this.wrapper.addEventListener('DOMMouseScroll', this.wheel.bind(this));
+		this.wrapper.addEventListener('DOMMouseScroll', this.wheel.bind(this));
 		// add tilt contols
 		this.tiltListener = this.tilt.bind(this);
 		window.addEventListener("deviceorientation", this.tiltListener, true);

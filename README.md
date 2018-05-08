@@ -26,6 +26,8 @@ var photoCylinder = new useful.photocylinder().init({
 	'elements': document.querySelectorAll('#photocylinder a'),
 	// restrict the popup to a container
 	'container' : document.body,
+	// don't use the built in modal popup
+	'standalone': true,
 	// file name check for spherical projections
 	'spherical' : /fov360/,
 	// file name check for cylindrical projections
@@ -33,13 +35,18 @@ var photoCylinder = new useful.photocylinder().init({
 	// optional webservice for acquiring sized images
 	'slicer' : 'php/imageslice.php?src=../{src}&{size}',
 	// rotation speed when idle
-	'idle': 0.002
+	'idle': 0.002,
+	// event handlers for image loading
+	'success': function(e) { console.log('success', e); },
+	'failure': function(e) { console.log('failure', e); }
 });
 ```
 
 **'elements' : {array}** - A collection of target elements.
 
 **'container' : {element}** - Restrict the popup to a container.
+
+**'standalone': {boolean}** - Don't use the built in modal popup interface.
 
 **'spherical' : {regexp}** - File name check for spherical projections.
 
@@ -48,6 +55,10 @@ var photoCylinder = new useful.photocylinder().init({
 **'slicer' : {string}** - Optional web-service for resizing images. An example is provided as *./php/imageslice.php*.
 
 **idle : {float}** - The steps in degrees to rotate when idle.
+
+**success : {function}** - A function that gets called when the image is loaded and displayed successfully.
+
+**failure : {function}** - A function that gets called when the image fails to load or display.
 
 ## How to build the script
 

@@ -43,15 +43,20 @@
 					var photocylinders = new useful.Photocylinder().init({
 						// target elements
 						'elements' : document.querySelectorAll('#photocylinder a'),
-						// restrict the popup to a container
+						// restrict the viewer to a container
 						'container' : document.body,
+						// don't use the built in modal popup
+						'standalone' : false,
 						// file name checks for spherical projections
 						'spherical': /fov360/i,
-			      		'cylindrical': /fov180/i,
+			      'cylindrical': /fov180/i,
 						// optional webservice for acquiring sized images
 						'slicer' : 'php/imageslice.php?src=../{src}&{size}',
 						// rotation speed when idle
-						'idle': 0.1
+						'idle' : 0.1,
+						// event handlers for image loading
+						'success' : function(e) { console.log('success', e); },
+						'failure' : function(e) { console.log('failure', e); }
 					});
 				//-->
 				</script>

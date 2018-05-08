@@ -18,7 +18,7 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 	// PROPERTIES
 
 	this.parent = parent;
-    this.config = parent.config;
+  this.config = parent.config;
 	this.popup = this.config.popup;
 	this.image = this.config.image;
 	this.imageAspect = null;
@@ -75,6 +75,8 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 		this.wrapper.appendChild(this.image);
 		// insert the object
 		this.popup.appendChild(this.wrapper);
+		// remember the object
+		this.config.stage = this.wrapper;
 	};
 
 	this.render = function() {
@@ -114,7 +116,7 @@ useful.Photocylinder.prototype.Stage = function (parent) {
 		this.wrapper.addEventListener('mousemove', this.touch.bind(this, 'move'));
 		this.wrapper.addEventListener('mouseup', this.touch.bind(this, 'end'));
 		this.wrapper.addEventListener('mousewheel', this.wheel.bind(this));
-	    this.wrapper.addEventListener('DOMMouseScroll', this.wheel.bind(this));
+		this.wrapper.addEventListener('DOMMouseScroll', this.wheel.bind(this));
 		// add tilt contols
 		this.tiltListener = this.tilt.bind(this);
 		window.addEventListener("deviceorientation", this.tiltListener, true);

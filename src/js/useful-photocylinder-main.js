@@ -23,6 +23,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		'container': document.body,
 		'spherical' : /fov360/,
 		'cylindrical' : /fov180/,
+		'standalone': false,
 		'slicer': '{src}',
 		'idle': 0.1
 	};
@@ -39,20 +40,26 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 	};
 
 	this.success = function(url) {
+		var config = this.config;
+		// hide the busy indicator
+		this.busy.hide();
 		// check if the aspect ratio of the image can be determined
-		var image = this.config.image;
+		var image = config.image;
 		var isWideEnough = (image.naturalWidth && image.naturalHeight && image.naturalWidth / image.naturalHeight > 3);
-		// show the popup
-		this.popup = new this.context.Popup(this);
-		this.popup.show();
+		// show the popup, or use the container directly
+		if (config.standalone) {
+			config.popup = config.container;
+			config.popup.innerHTML = '';
+		} else {
+			this.popup = new this.context.Popup(this);
+			this.popup.show();
+		}
 		// insert the viewer, but MSIE and low FOV should default to fallback
 		this.stage = (!/msie|trident|edge/i.test(navigator.userAgent) && (this.config.spherical.test(url) || this.config.cylindrical.test(url) || isWideEnough)) ? new this.context.Stage(this) : new this.context.Fallback(this);
 		this.stage.init();
-		// hide the busy indicator
-		this.busy.hide();
-		// resolve the opened promise
-		if (this.config.opened) {
-			this.config.opened(this.config.element);
+		// trigger the success handler
+		if (config.success) {
+			config.success(this.element, config.container);
 		}
 	};
 
@@ -63,14 +70,20 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		// give up on the popup
 		if (this.popup) {
 			// remove the popup
-			config.container.removeChild(this.popup);
+			config.popup.parentNode.removeChild(config.popup);
 			// remove its reference
 			this.popup = null;
+		}
+		// give up on the stage
+		if (this.stage) {
+			// remove the stage
+			config.stage.parentNode.removeChild(config.stage);
+			// remove the reference
 			this.stage = null;
 		}
-		// trigger the located handler directly
-		if (config.located) {
-			config.located(this.element);
+		// trigger the failure handler
+		if (config.failure) {
+			config.failure(this.element, config.container);
 		}
 		// hide the busy indicator
 		this.busy.hide();
@@ -91,8 +104,8 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		this.busy = new this.context.Busy(this.config.container);
 		this.busy.show();
 		// create the url for the image sizing webservice
-	    var url = this.config.url || this.element.getAttribute('href') || this.image.getAttribute('src');
-	    var size = (this.config.spherical.test(url)) ? 'height=1080&top=0.2&bottom=0.8' : 'height=1080';
+	  var url = this.config.url || this.element.getAttribute('href') || this.image.getAttribute('src');
+	  var size = (this.config.spherical.test(url)) ? 'height=1080&top=0.2&bottom=0.8' : 'height=1080';
 		// load the image asset
 		this.config.image = new Image();
 		this.config.image.src = this.config.slicer.replace('{src}', url).replace('{size}', size);

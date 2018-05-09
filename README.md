@@ -22,31 +22,28 @@ This include can be added to the header or placed inline before the script is in
 
 ```javascript
 var photoCylinder = new useful.photocylinder().init({
-	// target elements
-	'elements': document.querySelectorAll('#photocylinder a'),
-	// restrict the popup to a container
+	'url': './img/p4080071_fov90.jpg',
+	'elements' : document.querySelectorAll('#photocylinder a'),
 	'container' : document.body,
-	// don't use the built in modal popup
 	'standalone': true,
-	// file name check for spherical projections
 	'spherical' : /fov360/,
-	// file name check for cylindrical projections
 	'cylindrical' : /fov180/,
-	// optional webservice for acquiring sized images
 	'slicer' : 'php/imageslice.php?src=../{src}&{size}',
-	// rotation speed when idle
 	'idle': 0.002,
-	// event handlers for image loading
 	'success': function(e) { console.log('success', e); },
 	'failure': function(e) { console.log('failure', e); }
 });
 ```
 
-**'elements' : {array}** - A collection of target elements.
+**'url' : {string}** - Optionally load this url immediately.
 
-**'container' : {element}** - Restrict the popup to a container.
+**'elements' : {array}** - Optionally a collection of target elements.
 
-**'standalone': {boolean}** - Don't use the built in modal popup interface.
+**'element' : {dom element}** - Optionally a single target element.
+
+**'container' : {dom element}** - Optionally restrict the popup to this container.
+
+**'standalone': {boolean}** - Optionally don't use the built in modal popup interface.
 
 **'spherical' : {regexp}** - File name check for spherical projections.
 

@@ -35,9 +35,11 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 	// METHODS
 
 	this.init = function() {
-		// set the event handler on the target element
-		this.element.addEventListener('click', this.onElementClicked.bind(this));
-	};
+    // if an element was provided, add the event listener
+    if (this.config.element) this.config.element.addEventListener('click', this.onElementClicked.bind(this));
+    // or if a url was provided trigger the event immediately
+  	if (this.config.url) this.onElementClicked();
+  };
 
 	this.success = function(url) {
 		var config = this.config;
@@ -59,7 +61,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		this.stage.init();
 		// trigger the success handler
 		if (config.success) {
-			config.success(this.element, config.container);
+			config.success(config.container);
 		}
 	};
 
@@ -77,20 +79,20 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		// give up on the stage
 		if (this.stage) {
 			// remove the stage
+			this.stage.destroy();
 			config.stage.parentNode.removeChild(config.stage);
 			// remove the reference
 			this.stage = null;
 		}
 		// trigger the failure handler
 		if (config.failure) {
-			config.failure(this.element, config.container);
+			config.failure(config.container);
 		}
 		// hide the busy indicator
 		this.busy.hide();
 	};
 
 	this.destroy = function() {
-		console.log('main: destroy');
 		// shut down sub components
 		this.stage.destroy();
 	};
@@ -99,7 +101,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 
 	this.onElementClicked = function(evt) {
 		// prevent the click
-		evt.preventDefault();
+		if (evt) evt.preventDefault();
 		// show the busy indicator
 		this.busy = new this.context.Busy(this.config.container);
 		this.busy.show();

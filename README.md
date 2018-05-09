@@ -21,7 +21,7 @@ This include can be added to the header or placed inline before the script is in
 ## How to start the script
 
 ```javascript
-var photoCylinder = new useful.photocylinder().init({
+var photoCylinder = new Photocylinder({
 	'url': './img/p4080071_fov90.jpg',
 	'elements' : document.querySelectorAll('#photocylinder a'),
 	'container' : document.body,
@@ -37,9 +37,9 @@ var photoCylinder = new useful.photocylinder().init({
 
 **'url' : {string}** - Optionally load this url immediately.
 
-**'elements' : {array}** - Optionally a collection of target elements.
-
 **'element' : {dom element}** - Optionally a single target element.
+
+**'elements' : {array}** - Optionally a collection of target elements.
 
 **'container' : {dom element}** - Optionally restrict the popup to this container.
 

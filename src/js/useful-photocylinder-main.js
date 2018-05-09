@@ -1,19 +1,5 @@
-/*
-	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
-
-	License:
-	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
-*/
-
-// create the constructor if needed
-var useful = useful || {};
-useful.Photocylinder = useful.Photocylinder || function() {};
-
 // extend the constructor
-useful.Photocylinder.prototype.Main = function(config, context) {
-
-	"use strict";
+Photocylinder.prototype.Main = function(config, context) {
 
 	// PROPERTIES
 
@@ -28,18 +14,11 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		'idle': 0.1
 	};
 
-	for (name in config) {
-		this.config[name] = config[name];
+	for (var key in config) {
+		this.config[key] = config[key];
 	}
 
 	// METHODS
-
-	this.init = function() {
-    // if an element was provided, add the event listener
-    if (this.config.element) this.config.element.addEventListener('click', this.onElementClicked.bind(this));
-    // or if a url was provided trigger the event immediately
-  	if (this.config.url) this.onElementClicked();
-  };
 
 	this.success = function(url) {
 		var config = this.config;
@@ -61,7 +40,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		this.stage.init();
 		// trigger the success handler
 		if (config.success) {
-			config.success(config.container);
+			config.success(config.popup);
 		}
 	};
 
@@ -86,7 +65,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		}
 		// trigger the failure handler
 		if (config.failure) {
-			config.failure(config.container);
+			config.failure(config.popup);
 		}
 		// hide the busy indicator
 		this.busy.hide();
@@ -116,9 +95,7 @@ useful.Photocylinder.prototype.Main = function(config, context) {
 		this.config.image.addEventListener('error', this.failure.bind(this, url));
 	};
 
-};
+	if (this.config.element) this.config.element.addEventListener('click', this.onElementClicked.bind(this));
+	if (this.config.url) this.onElementClicked();
 
-// return as a require.js module
-if (typeof module !== 'undefined') {
-	exports = module.exports = useful.Photocylinder.Main;
-}
+};

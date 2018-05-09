@@ -16,8 +16,8 @@ var gulp = require('gulp'),
 	special = require('gulp-special-html'),
 	clean = require('gulp-clean'),
 	prerequisites = [
-		'polyfills',
-		'requests'
+		//'polyfills',
+		//'requests'
 	];
 
 // prerequisites
@@ -141,13 +141,13 @@ gulp.task('styles:dist', function() {
 });
 
 gulp.task('scripts:dev', function() {
-	gulp.src(['src/lib/*.js', 'src/js/*.js'])
+	gulp.src(['src/lib/*.js', 'src/js/' + project + '.js', 'src/js/*.js'])
 		.pipe(concat(project + '.js'))
 		.pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('scripts:dist', function() {
-	gulp.src(['src/lib/*.js', 'src/js/*.js'])
+	gulp.src(['src/lib/*.js', 'src/js/' + project + '.js', 'src/js/*.js'])
 		.pipe(concat(project + '.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist/js/'));

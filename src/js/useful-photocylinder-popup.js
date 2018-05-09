@@ -1,19 +1,5 @@
-/*
-	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180102, http://www.woollymittens.nl/.
-
-	License:
-	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
-*/
-
-// create the constructor if needed
-var useful = useful || {};
-useful.Photocylinder = useful.Photocylinder || function() {};
-
 // extend the constructor
-useful.Photocylinder.prototype.Popup = function(parent) {
-
-	"use strict";
+Photocylinder.prototype.Popup = function(parent) {
 
 	// PROPERTIES
 
@@ -127,8 +113,3 @@ useful.Photocylinder.prototype.Popup = function(parent) {
 	};
 
 };
-
-// return as a require.js module
-if (typeof module !== 'undefined') {
-	exports = module.exports = useful.Photocylinder.Popup;
-}

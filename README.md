@@ -43,7 +43,7 @@ var photoCylinder = new Photocylinder({
 
 **'container' : {dom element}** - Optionally restrict the popup to this container.
 
-**'standalone': {boolean}** - Optionally don't use the built in modal popup interface.
+**'standalone': {boolean}** - Optionally forsake the built in modal popup interface.
 
 **'spherical' : {regexp}** - File name check for spherical projections.
 

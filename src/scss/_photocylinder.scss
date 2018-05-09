@@ -131,7 +131,9 @@
 			img {
 				visibility: visible;
 				height: 100%;
+				max-height: none;
 				width: auto;
+				max-width: none;
 				position: absolute;
 				left: 50%;
 				top: 50%;

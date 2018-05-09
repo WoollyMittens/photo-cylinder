@@ -21,6 +21,7 @@ Photocylinder.prototype.Main = function(config, context) {
 	// METHODS
 
 	this.success = function(url) {
+		console.log("success", url);
 		var config = this.config;
 		// hide the busy indicator
 		this.busy.hide();

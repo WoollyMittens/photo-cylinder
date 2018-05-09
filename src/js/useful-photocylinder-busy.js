@@ -18,8 +18,8 @@ Photocylinder.prototype.Busy = function (container) {
 
 	this.hide = function () {
 		// deconstruct the spinner
-		if (this.spinner) {
-			this.container.removeChild(this.spinner);
+		if (this.spinner && this.spinner.parentNode) {
+			this.spinner.parentNode.removeChild(this.spinner);
 			this.spinner = null;
 		}
 	};

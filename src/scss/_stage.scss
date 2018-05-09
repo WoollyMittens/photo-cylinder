@@ -1,0 +1,109 @@
+/*
+	3d stage
+
+	The base size of the calculations was arbitrarily picked as 500, but the resulting projection can be arbitrarily large.
+
+	tan A = Y / X
+	tan(22.5) = 300 / X
+	tan(22.5) / 300 = 1 / X
+	300 / tan(22.5) = X
+
+	Z = 1.207106781186548 * X
+
+	scale = aspect * (360 / fov) * 0.3
+
+	translateZ(calc(-1.207106781186548 * 500px + 2px))
+
+	translateZ(-601.553390593274px)
+*/
+.photo-cylinder {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	perspective: 500px;
+
+	img {
+		visibility: hidden;
+		width: 100%;
+		height: auto;
+	}
+
+	.pc-obj-row {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 500px;
+		height: 1200px;
+		transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+		transform-style: preserve-3d;
+		position: relative;
+	}
+
+	.pc-obj-col {
+		background-size: 800% auto;
+		background-position: 0 50%;
+		background-repeat: no-repeat;
+		display: block;
+		position: absolute;
+		transform-style: preserve-3d;
+		perspective-origin: 50% 50%;
+		backface-visibility: hidden;
+		width: 100%;
+		height: 100%;
+	}
+
+	.pc-obj-col-0 {
+		transform: rotateY(0deg) translateZ(-601.553390593274px);
+		background-position: 0 50%;
+	}
+
+	.pc-obj-col-1 {
+		transform: rotateY(-45deg) translateZ(-601.553390593274px);
+		background-position: -500px 50%;
+	}
+
+	.pc-obj-col-2 {
+		transform: rotateY(-90deg) translateZ(-601.553390593274px);
+		background-position: -1000px 50%;
+	}
+
+	.pc-obj-col-3 {
+		transform: rotateY(-135deg) translateZ(-601.553390593274px);
+		background-position: -1500px 50%;
+	}
+
+	.pc-obj-col-4 {
+		transform: rotateY(-180deg) translateZ(-601.553390593274px);
+		background-position: -2000px 50%;
+	}
+
+	.pc-obj-col-5 {
+		transform: rotateY(-225deg) translateZ(-601.553390593274px);
+		background-position: -2500px 50%;
+	}
+
+	.pc-obj-col-6 {
+		transform: rotateY(-270deg) translateZ(-601.553390593274px);
+		background-position: -3000px 50%;
+	}
+
+	.pc-obj-col-7 {
+		transform: rotateY(-315deg) translateZ(-601.553390593274px);
+		background-position: -3500px 50%;
+	}
+
+}
+
+.photo-cylinder.pc-180 {
+	.pc-obj-col {
+		background-size: 400% auto;
+	}
+}
+
+.photo-cylinder.pc-360 {
+	.pc-obj-col {
+		background-size: 800% auto;
+	}
+}

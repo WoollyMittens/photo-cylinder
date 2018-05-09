@@ -1,0 +1,13 @@
+.photo-cylinder.pc-fallback {
+	img {
+		visibility: visible;
+		height: 100%;
+		max-height: none;
+		width: auto;
+		max-width: none;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%) scale(1, 1);
+	}
+}

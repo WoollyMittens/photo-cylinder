@@ -1,4 +1,4 @@
-// project
+// project name
 
 var project = __dirname.split(/\/|-/).pop();
 
@@ -177,13 +177,3 @@ function errorHandler(error) {
 	console.log(error.toString());
 	this.emit('end');
 }
-
-
-
-
-
-
-
-
-
-// EOF

@@ -1,4 +1,4 @@
-# useful.photocylinder.js: Projected Cylindrical Image
+# photocylinder.js: Projected Cylindrical Image
 
 Displays a cylindrical projection of a panoramic image.
 
@@ -9,13 +9,13 @@ Try the <a href="http://www.woollymittens.nl/default.php?url=useful-photocylinde
 The stylesheet is best included in the header of the document.
 
 ```html
-<link rel="stylesheet" href="./css/useful-photocylinder.css"/>
+<link rel="stylesheet" href="./css/photocylinder.css"/>
 ```
 
 This include can be added to the header or placed inline before the script is invoked.
 
 ```html
-<script src="./js/useful-photocylinder.js"></script>
+<script src="./js/photocylinder.js"></script>
 ```
 
 ## How to start the script

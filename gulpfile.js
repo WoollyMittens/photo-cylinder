@@ -1,6 +1,6 @@
 // project
 
-var project = __dirname.split('/').pop();
+var project = __dirname.split(/\/|-/).pop();
 
 // dependencies
 

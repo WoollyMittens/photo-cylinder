@@ -1,4 +1,4 @@
-# photocylinder.js: Projected Cylindrical Image
+# Projected Cylindrical Image
 
 Displays a cylindrical projection of a panoramic image.
 

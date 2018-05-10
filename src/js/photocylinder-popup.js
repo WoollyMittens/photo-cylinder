@@ -1,4 +1,4 @@
-// extend the constructor
+// extend the class
 Photocylinder.prototype.Popup = function(parent) {
 
 	// PROPERTIES

@@ -1,4 +1,4 @@
-// extend the constructor
+// extend the class
 Photocylinder.prototype.Main = function(config, context) {
 
 	// PROPERTIES

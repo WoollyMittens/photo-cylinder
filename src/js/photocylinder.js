@@ -6,7 +6,7 @@
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
 */
 
-// create the class if needed
+// establish the class
 var Photocylinder = function (config) {
 
 		this.only = function (config) {

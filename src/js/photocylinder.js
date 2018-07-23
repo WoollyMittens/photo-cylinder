@@ -1,6 +1,6 @@
 /*
 	Source:
-	van Creij, Maurice (2018). "photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180510, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "photocylinder.js: Displays a cylindrical projection of a panoramic image.", http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.

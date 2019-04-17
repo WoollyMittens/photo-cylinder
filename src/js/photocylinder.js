@@ -34,5 +34,5 @@ var Photocylinder = function (config) {
 };
 
 // return as a require.js module
-if (typeof define != 'undefined') define(['photocylinder'], function () { return Photocylinder });
+if (typeof define != 'undefined') define([], function () { return Photocylinder });
 if (typeof module != 'undefined') module.exports = Photocylinder;

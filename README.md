@@ -18,16 +18,30 @@ This include can be added to the header or placed inline before the script is in
 <script src="./js/photocylinder.js"></script>
 ```
 
+Or use [Require.js](https://requirejs.org/).
+
+```js
+requirejs(['js/photocylinder.js'], function(Photocylinder) {
+	...
+});
+```
+
+Or import into an MVC framework.
+
+```js
+var Photocylinder = require('js/photocylinder.js');
+```
+
 ## How to start the script
 
 ```javascript
 var photoCylinder = new Photocylinder({
 	'url': './img/p4080071_fov90.jpg',
+	'element' : document.querySelector('#photocylinder a'),
 	'elements' : document.querySelectorAll('#photocylinder a'),
 	'container' : document.body,
 	'standalone': true,
-	'spherical' : /fov360/,
-	'cylindrical' : /fov180/,
+	'spherical' : /r(\d+).jpg/i,
 	'slicer' : 'php/imageslice.php?src=../{src}&{size}',
 	'idle': 0.002,
 	'success': function(e) { console.log('success', e); },
@@ -35,27 +49,25 @@ var photoCylinder = new Photocylinder({
 });
 ```
 
-**'url' : {string}** - Optionally load this url immediately.
+**'url' : {string}** - Either load this url immediately.
 
-**'element' : {dom element}** - Optionally a single target element.
+- **'element' : {dom element}** - Or when clicked on a single target element.
 
-**'elements' : {array}** - Optionally a collection of target elements.
+- **'elements' : {array}** - Or when clicked on any of multiple target elements.
 
-**'container' : {dom element}** - Optionally restrict the popup to this container.
+**'container' : {dom element}** - Restrict the popup to this container.
 
-**'standalone': {boolean}** - Optionally forsake the built in modal popup interface.
+**'standalone': {boolean}** - Don't use the modal popup interface.
 
 **'spherical' : {regexp}** - File name check for spherical projections.
 
-**'cylindrical' : {regexp}** - File name check for cylindrical projections.
+**'slicer' : {string}** - Web-service for resizing images. An example is provided as *./php/imageslice.php*.
 
-**'slicer' : {string}** - Optional web-service for resizing images. An example is provided as *./php/imageslice.php*.
+**idle : {float}** - Steps in degrees to rotate when idle.
 
-**idle : {float}** - The steps in degrees to rotate when idle.
+**success : {function}** - Function that gets called when the image is loaded and displayed successfully.
 
-**success : {function}** - A function that gets called when the image is loaded and displayed successfully.
-
-**failure : {function}** - A function that gets called when the image fails to load or display.
+**failure : {function}** - Function that gets called when the image fails to load or display.
 
 ## How to build the script
 

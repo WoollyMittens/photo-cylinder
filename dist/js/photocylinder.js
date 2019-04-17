@@ -1,12 +1,12 @@
 /*
 	Source:
-	van Creij, Maurice (2018). "useful-photocylinder.js: Displays a cylindrical projection of a panoramic image.", version 20180510, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "photocylinder.js: Displays a cylindrical projection of a panoramic image.", http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
 */
 
-// create the class if needed
+// establish the class
 var Photocylinder = function (config) {
 
 		this.only = function (config) {
@@ -34,11 +34,10 @@ var Photocylinder = function (config) {
 };
 
 // return as a require.js module
-if (typeof module !== 'undefined') {
-	exports = module.exports = Photocylinder;
-}
+if (typeof define != 'undefined') define([], function () { return Photocylinder });
+if (typeof module != 'undefined') module.exports = Photocylinder;
 
-// extend the constructor
+// extend the class
 Photocylinder.prototype.Busy = function (container) {
 
 	// PROPERTIES
@@ -66,7 +65,7 @@ Photocylinder.prototype.Busy = function (container) {
 
 };
 
-// extend the constructor
+// extend the class
 Photocylinder.prototype.Fallback = function (parent) {
 
 	// PROPERTIES
@@ -314,7 +313,7 @@ Photocylinder.prototype.Fallback = function (parent) {
 
 };
 
-// extend the constructor
+// extend the class
 Photocylinder.prototype.Main = function(config, context) {
 
 	// PROPERTIES
@@ -323,8 +322,7 @@ Photocylinder.prototype.Main = function(config, context) {
 	this.element = config.element;
 	this.config = {
 		'container': document.body,
-		'spherical' : /fov360/,
-		'cylindrical' : /fov180/,
+		'spherical' : /r(\d+).jpg/i,
 		'standalone': false,
 		'slicer': '{src}',
 		'idle': 0.1
@@ -336,7 +334,7 @@ Photocylinder.prototype.Main = function(config, context) {
 
 	// METHODS
 
-	this.success = function(url) {
+	this.success = function(url, fov) {
 		console.log("success", url);
 		var config = this.config;
 		// hide the busy indicator
@@ -353,7 +351,9 @@ Photocylinder.prototype.Main = function(config, context) {
 			this.popup.show();
 		}
 		// insert the viewer, but MSIE and low FOV should default to fallback
-		this.stage = (!/msie|trident|edge/i.test(navigator.userAgent) && (this.config.spherical.test(url) || this.config.cylindrical.test(url) || isWideEnough)) ? new this.context.Stage(this) : new this.context.Fallback(this);
+		this.stage = (!/msie|trident|edge/i.test(navigator.userAgent) && (this.config.spherical.test(url) || isWideEnough))
+		  ? new this.context.Stage(this)
+		  : new this.context.Fallback(this);
 		this.stage.init();
 		// trigger the success handler
 		if (config.success) {
@@ -361,7 +361,7 @@ Photocylinder.prototype.Main = function(config, context) {
 		}
 	};
 
-	this.failure = function(url) {
+	this.failure = function(url, fov) {
 		var config = this.config;
 		// get rid of the image
 		this.config.image = null;
@@ -402,7 +402,7 @@ Photocylinder.prototype.Main = function(config, context) {
 		this.busy = new this.context.Busy(this.config.container);
 		this.busy.show();
 		// create the url for the image sizing webservice
-	  var url = this.config.url || this.element.getAttribute('href') || this.image.getAttribute('src');
+	  var url = this.config.url || this.element.getAttribute('href') || this.element.getAttribute('data-url');
 	  var size = (this.config.spherical.test(url)) ? 'height=1080&top=0.2&bottom=0.8' : 'height=1080';
 		// load the image asset
 		this.config.image = new Image();
@@ -417,7 +417,7 @@ Photocylinder.prototype.Main = function(config, context) {
 
 };
 
-// extend the constructor
+// extend the class
 Photocylinder.prototype.Popup = function(parent) {
 
 	// PROPERTIES
@@ -533,7 +533,7 @@ Photocylinder.prototype.Popup = function(parent) {
 
 };
 
-// extend the constructor
+// extend the class
 Photocylinder.prototype.Stage = function (parent) {
 
 	// PROPERTIES

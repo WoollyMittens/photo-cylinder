@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>useful-photocylinder.js: Projected Cylindrical Images</title>
+		<title>photocylinder.js: Photo Cylinder</title>
 		<style>
 			html { font-family:Sans-Serif; font-size:75%; height:100%; }
 			body { _height:100%; line-height:180%; margin:0; min-height:100%; padding:1%; }
@@ -12,11 +12,6 @@
 			.example-left > article, .example-left > aside { width:48%; padding:1%; float:left; }
 			.example-right > article, .example-right > aside { width:48%; padding:1%; float:right; }
 		</style>
-		<!--[if lte IE 9]>
-			<meta http-equiv="imagetoolbar" content="no"/>
-            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
-		<![endif]-->
 	</head>
 	<body>
 		<section class="example example-left">
@@ -31,12 +26,12 @@
 				<style>@import url("./css/photocylinder.css");</style>
 				<script src="./js/photocylinder.js"></script>
 				<ul id="photocylinder">
-					<li><a href="./img/p4080071_fov90.jpg"><img alt="" src="./img/p4080071_small.jpg"/></a></li>
-					<li><a href="./img/p4080072_fov60.jpg"><img alt="" src="./img/p4080072_small.jpg"/></a></li>
-					<li><a href="./img/r0012077_fov360.jpg"><img alt="" src="./img/r0012077_small.jpg"/></a></li>
-					<li><a href="./img/p4080073_p4080082_fov180.jpg"><img alt="" src="./img/p4080073_p4080082_small.jpg"/></a></li>
-					<li><a href="./img/dsc_7043_dsc_7050_fov180.jpg"><img alt="" src="./img/dsc_7043_dsc_7050_small.jpg"/></a></li>
-					<li><a href="./img/r0012880_fov360.jpg"><img alt="" src="./img/r0012880_small.jpg"/></a></li>
+					<li><a href="./img/p4080071.jpg"><img alt="" src="./img/p4080071_small.jpg"/></a></li>
+					<li><a href="./img/p4080072.jpg"><img alt="" src="./img/p4080072_small.jpg"/></a></li>
+					<li><a href="./img/r0012077.jpg"><img alt="" src="./img/r0012077_small.jpg"/></a></li>
+					<li><a href="./img/p4080073_p4080082.jpg"><img alt="" src="./img/p4080073_p4080082_small.jpg"/></a></li>
+					<li><a href="./img/dsc_7043_dsc_7050.jpg"><img alt="" src="./img/dsc_7043_dsc_7050_small.jpg"/></a></li>
+					<li><a href="./img/r0012880.jpg"><img alt="" src="./img/r0012880_small.jpg"/></a></li>
 				</ul>
 				<script>
 				//<!--
@@ -48,8 +43,7 @@
 						// forsake the built in modal popup
 						'standalone' : false,
 						// file name checks for spherical projections
-						'spherical': /fov360/i,
-			      'cylindrical': /fov180/i,
+						'spherical': /r(\d+).jpg/i,
 						// optional webservice for acquiring sized images
 						'slicer' : 'php/imageslice.php?src=../{src}&{size}',
 						// rotation speed when idle

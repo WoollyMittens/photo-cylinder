@@ -51,9 +51,9 @@ var photoCylinder = new Photocylinder({
 
 **'url' : {string}** - Either load this url immediately.
 
-- **'element' : {dom element}** - Or when clicked on a single target element.
+- **'element' : {dom element}** - *Or* when clicked on a single target element.
 
-- **'elements' : {array}** - Or when clicked on any of multiple target elements.
+- **'elements' : {array}** - *Or* when clicked on any of multiple target elements.
 
 **'container' : {dom element}** - Restrict the popup to this container.
 

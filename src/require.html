@@ -26,12 +26,12 @@
 				<!-- Cut below this -->
 				<style>@import url("./css/photocylinder.css");</style>
 				<ul id="photocylinder">
-					<li><a href="./img/p4080071.jpg"><img alt="" src="./img/p4080071_small.jpg"/></a></li>
-					<li><a href="./img/p4080072.jpg"><img alt="" src="./img/p4080072_small.jpg"/></a></li>
-					<li><a href="./img/r0012077.jpg"><img alt="" src="./img/r0012077_small.jpg"/></a></li>
-					<li><a href="./img/p4080073_p4080082.jpg"><img alt="" src="./img/p4080073_p4080082_small.jpg"/></a></li>
-					<li><a href="./img/dsc_7043_dsc_7050.jpg"><img alt="" src="./img/dsc_7043_dsc_7050_small.jpg"/></a></li>
-					<li><a href="./img/r0012880.jpg"><img alt="" src="./img/r0012880_small.jpg"/></a></li>
+					<li><a href="img/p4080071.jpg"><img alt="" src="./img/p4080071_small.jpg"/></a></li>
+					<li><a href="img/p4080072.jpg"><img alt="" src="./img/p4080072_small.jpg"/></a></li>
+					<li><a href="img/r0012077.jpg"><img alt="" src="./img/r0012077_small.jpg"/></a></li>
+					<li><a href="img/p4080073_p4080082.jpg"><img alt="" src="./img/p4080073_p4080082_small.jpg"/></a></li>
+					<li><a href="img/dsc_7043_dsc_7050.jpg"><img alt="" src="./img/dsc_7043_dsc_7050_small.jpg"/></a></li>
+					<li><a href="img/r0012880.jpg"><img alt="" src="./img/r0012880_small.jpg"/></a></li>
 				</ul>
 				<script>
 					requirejs(["./js/photocylinder.js"], function(Photocylinder) {
@@ -45,7 +45,7 @@
 							// file name checks for spherical projections
 							'spherical': /r(\d+).jpg/i,
 							// optional webservice for acquiring sized images
-							'slicer' : 'php/imageslice.php?src=../{src}&{size}',
+							'slicer' : './php/imageslice.php?src=../{src}&{size}',
 							// rotation speed when idle
 							'idle' : 0.1,
 							// event handlers for image loading

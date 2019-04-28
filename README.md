@@ -9,19 +9,21 @@ Try the <a href="http://www.woollymittens.nl/default.php?url=useful-photocylinde
 The stylesheet is best included in the header of the document.
 
 ```html
-<link rel="stylesheet" href="./css/photocylinder.css"/>
+<link rel="stylesheet" href="css/photocylinder.css"/>
 ```
 
 This include can be added to the header or placed inline before the script is invoked.
 
 ```html
-<script src="./js/photocylinder.js"></script>
+<script src="js/photocylinder.js"></script>
 ```
 
 Or use [Require.js](https://requirejs.org/).
 
 ```js
-requirejs(['js/photocylinder.js'], function(Photocylinder) {
+requirejs([
+	'js/photocylinder.js'
+], function(Photocylinder) {
 	...
 });
 ```

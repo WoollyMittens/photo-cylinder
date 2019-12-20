@@ -44,7 +44,7 @@ var photoCylinder = new Photocylinder({
 	'container' : document.body,
 	'standalone': true,
 	'spherical' : /r(\d+).jpg/i,
-	'slicer' : 'php/imageslice.php?src=../{src}&{size}',
+	'slicer' : 'php/imageslice.php?src={src}&{size}',
 	'idle': 0.002,
 	'success': function(e) { console.log('success', e); },
 	'failure': function(e) { console.log('failure', e); }

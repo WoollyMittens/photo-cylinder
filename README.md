@@ -4,6 +4,10 @@
 
 Displays a cylindrical projection of a panoramic image.
 
+## Example
+
+https://woollymittens.github.io/photo-cylinder/
+
 ## How to include the script
 
 The stylesheet is best included in the header of the document.

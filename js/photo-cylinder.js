@@ -6,14 +6,12 @@ import { PhotoCylinderFallback } from "./photo-cylinder-fallback.js";
 export class PhotoCylinder {
 	constructor(config) {
 		// merge the config with the default options
-		this.config = {
+		this.defaults = {
 			'container': document.body,
 			'fov' : 180,
 			'idle': 0.1
 		}
-		for (var key in config) {
-			this.config[key] = config[key];
-		}
+		this.config = {...this.defaults, ...config}
 		// add the busy indicator
 		this.busy = new PhotoCylinderBusy(this.config.container);
 		// load the default asset

@@ -36,21 +36,21 @@ new PhotoCylinder({
 });
 ```
 
-**'url' : {string}** - The URL of the image.
+**url : {String}** - The URL of the image.
 
-**'sequence' : {array}** - An optinal array or image URLs to display in sequence.
+**sequence : {Array}** - An optinal array or image URLs to display in sequence.
 
-**'container' : {dom element}** - Restrict the popup to this container.
+**container : {DOM Element}** - Restrict the popup to this container.
 
-**'fov' : {integer}** - Whether to use a 180 or a 360 degree field of view.
+**fov : {Integer}** - Whether to use a 180 or a 360 degree field of view.
 
-**idle : {float}** - Steps in degrees to rotate when idle.
+**idle : {Float}** - Steps in degrees to rotate when idle.
 
-**navigated : {function}** - Function that gets called when the next image in the sequence is shown.
+**navigated : {Function}** - Function that gets called when the next image in the sequence is shown.
 
-**opened : {function}** - Function that gets called when the viewer is opened.
+**opened : {Function}** - Function that gets called when the viewer is opened.
 
-**closed : {function}** - Function that gets called when the viewer is closed.
+**closed : {Function}** - Function that gets called when the viewer is closed.
 
 ## License
 

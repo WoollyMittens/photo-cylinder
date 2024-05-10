@@ -1,6 +1,4 @@
-# photocylinder.js: Projected Cylindrical Image
-
-// TODO: update with the more developed version from the sydneyhikingtrip app
+# Projected Cylindrical Image
 
 Displays a cylindrical projection of a panoramic image.
 
@@ -10,70 +8,49 @@ https://woollymittens.github.io/photo-cylinder/
 
 ## How to include the script
 
-The stylesheet is best included in the header of the document.
+The includes can be added to the HTML document:
 
 ```html
-<link rel="stylesheet" href="css/photocylinder.css"/>
+<link href="./css/photo-cylinder.css" rel="stylesheet" />
+<script src="./js/photo-cylinder.js" type="module"></script>
 ```
 
-This include can be added to the header or placed inline before the script is invoked.
-
-```html
-<script src="js/photocylinder.js"></script>
-```
-
-Or use [Require.js](https://requirejs.org/).
+Or as a [Javascript module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules):
 
 ```js
-requirejs([
-	'js/photocylinder.js'
-], function(Photocylinder) {
-	...
-});
-```
-
-Or use imported as a component in existing projects.
-
-```js
-@import {Photocylinder} from "js/photocylinder.js";
+@import { Photocylinder } from "js/photo-cylinder.js";
 ```
 
 ## How to start the script
 
 ```javascript
-var photoCylinder = new Photocylinder({
-	'url': './img/p4080071_fov90.jpg',
-	'element' : document.querySelector('#photocylinder a'),
-	'elements' : document.querySelectorAll('#photocylinder a'),
-	'container' : document.body,
-	'standalone': true,
-	'spherical' : /r(\d+).jpg/i,
-	'slicer' : 'php/imageslice.php?src={src}&{size}',
-	'idle': 0.002,
-	'success': function(e) { console.log('success', e); },
-	'failure': function(e) { console.log('failure', e); }
+new PhotoCylinder({
+  'url': photo.href,
+  'sequence': urls,
+  'container': document.body,
+  'fov': 180,
+  'idle': 0.1,
+  'navigated': (url) => {},
+  'opened': (url) => {},
+  'closed': () => {}
 });
 ```
 
-**'url' : {string}** - Either load this url immediately.
+**'url' : {string}** - The URL of the image.
 
-- **'element' : {dom element}** - *Or* when clicked on a single target element.
-
-- **'elements' : {array}** - *Or* when clicked on any of multiple target elements.
+**'sequence' : {array}** - An optinal array or image URLs to display in sequence.
 
 **'container' : {dom element}** - Restrict the popup to this container.
 
-**'standalone': {boolean}** - Don't use the modal popup interface.
-
-**'spherical' : {regexp}** - File name check for spherical projections.
-
-**'slicer' : {string}** - Web-service for resizing images. An example is provided as *./php/imageslice.php*.
+**'fov' : {integer}** - Whether to use a 180 or a 360 degree field of view.
 
 **idle : {float}** - Steps in degrees to rotate when idle.
 
-**success : {function}** - Function that gets called when the image is loaded and displayed successfully.
+**navigated : {function}** - Function that gets called when the next image in the sequence is shown.
 
-**failure : {function}** - Function that gets called when the image fails to load or display.
+**opened : {function}** - Function that gets called when the viewer is opened.
+
+**closed : {function}** - Function that gets called when the viewer is closed.
 
 ## License
 

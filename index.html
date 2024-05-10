@@ -3,60 +3,48 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>photocylinder.js: Photo Cylinder</title>
-		<style>
-			html { font-family:Sans-Serif; font-size:75%; height:100%; }
-			body { _height:100%; line-height:180%; margin:0; min-height:100%; padding:1%; }
-			.example { max-width:960px; margin:0 auto; padding:0; clear:both; }
-			.example > article, .example > aside { width:98%; padding:2%; }
-			.example-left > article, .example-left > aside { width:48%; padding:1%; float:left; }
-			.example-right > article, .example-right > aside { width:48%; padding:1%; float:right; }
-		</style>
+		<title>Photo Cylinder</title>
+		<link href="./css/photo-cylinder.css" rel="stylesheet" />
+		<script src="./js/photo-cylinder.js" type="module"></script>
 	</head>
-	<body>
-		<section class="example example-left">
-			<article>
-				<h2>Photo Cylinder</h2>
-				<p>Displays a cylindrical projection of a panoramic image.</p>
-				<p><a class="button downloadButton" href="http://github.com/WoollyMittens/useful-photocylinder" target="_blank">Download (GitHub)</a></p>
-			</article>
-			<aside>
+	<body style="font-family:sans-serif; background-color:white; color:black; padding:2rem;">
 
-				<!-- Cut below this -->
-				<style>@import url("./css/photocylinder.css");</style>
-				<script src="./js/photocylinder.js"></script>
-				<ul id="photocylinder">
-					<li><a href="img/p4080071.jpg"><img alt="" src="./img/p4080071_small.jpg"/></a></li>
-					<li><a href="img/p4080072.jpg"><img alt="" src="./img/p4080072_small.jpg"/></a></li>
-					<li><a href="img/r0012077.jpg"><img alt="" src="./img/r0012077_small.jpg"/></a></li>
-					<li><a href="img/p4080073_p4080082.jpg"><img alt="" src="./img/p4080073_p4080082_small.jpg"/></a></li>
-					<li><a href="img/dsc_7043_dsc_7050.jpg"><img alt="" src="./img/dsc_7043_dsc_7050_small.jpg"/></a></li>
-					<li><a href="img/r0012880.jpg"><img alt="" src="./img/r0012880_small.jpg"/></a></li>
+		<section style="max-width:32rem; margin:0 auto;">
+
+				<ul id="photocylinder" style="display:flex; flex-wrap:wrap; gap:2px; margin:0; padding:0;">
+					<li style="display:contents;"><a style="display:block; flex: 1 1 auto;" href="img/p4080071.jpg"><img style="display:block; object-fit:cover; width:100%; height:160px;" alt="" src="./img/p4080071_small.jpg"/></a></li>
+					<li style="display:contents;"><a style="display:block; flex: 1 1 auto;" href="img/p4080072.jpg"><img style="display:block; object-fit:cover; width:100%; height:160px;" alt="" src="./img/p4080072_small.jpg"/></a></li>
+					<li style="display:contents;"><a style="display:block; flex: 1 1 auto;" href="img/r0012077.jpg"><img style="display:block; object-fit:cover; width:100%; height:160px;" alt="" src="./img/r0012077_small.jpg"/></a></li>
+					<li style="display:contents;"><a style="display:block; flex: 1 1 auto;" href="img/p4080073_p4080082.jpg"><img style="display:block; object-fit:cover; width:100%; height:160px;" alt="" src="./img/p4080073_p4080082_small.jpg"/></a></li>
+					<li style="display:contents;"><a style="display:block; flex: 1 1 auto;" href="img/dsc_7043_dsc_7050.jpg"><img style="display:block; object-fit:cover; width:100%; height:160px;" alt="" src="./img/dsc_7043_dsc_7050_small.jpg"/></a></li>
+					<li style="display:contents;"><a style="display:block; flex: 1 1 auto;" href="img/r0012880.jpg"><img style="display:block; object-fit:cover; width:100%; height:160px;" alt="" src="./img/r0012880_small.jpg"/></a></li>
 				</ul>
-				<script>
-				//<!--
-					var photocylinders = new Photocylinder({
-						// target elements
-						'elements' : document.querySelectorAll('#photocylinder a'),
-						// restrict the viewer to a container
-						'container' : document.body,
-						// forsake the built in modal popup
-						'standalone' : false,
-						// file name checks for spherical projections
-						'spherical': /r(\d+).jpg/i,
-						// optional webservice for acquiring sized images
-						'slicer' : './php/imageslice.php?src={src}&{size}',
-						// rotation speed when idle
-						'idle' : 0.1,
-						// event handlers for image loading
-						'success' : function(e) { console.log('success', e); },
-						'failure' : function(e) { console.log('failure', e); }
-					});
-				//-->
-				</script>
-				<!-- Cut above this -->
 
-			</aside>
+				<script>
+					const photos = [...document.querySelectorAll('#photocylinder a')];
+					const urls = photos.map((photo) => photo.href);
+
+					for(let photo of photos) {
+
+						photo.addEventListener('click', (evt) => {
+
+							evt.preventDefault();
+
+							new PhotoCylinder({
+								'url': photo.href,
+								'sequence': urls,
+								'container': document.body,
+								'fov': (/r0\d{6}/i.test(photo.href)) ? 360 : 180,
+								'idle': 0.1,
+								'navigated': (url) => {},
+								'opened': (url) => {},
+								'closed': () => {}
+							});
+
+						});
+					}
+				</script>
+
 		</section>
 	</body>
 </html>

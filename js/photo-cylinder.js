@@ -2,7 +2,7 @@ import { PhotoCylinderPopup } from "./photo-cylinder-popup.js";
 import { PhotoCylinderStage } from "./photo-cylinder-stage.js";
 import { PhotoCylinderBusy } from "./photo-cylinder-busy.js";
 import { PhotoCylinderFallback } from "./photo-cylinder-fallback.js";
-//import sheet from '../css/photo-cylinder.css' with { type: 'css' };
+//import PhotoCylinderSheet from '../css/photo-cylinder.css' with { type: 'css' };
 
 export class PhotoCylinder {
 	constructor(config) {
@@ -14,7 +14,7 @@ export class PhotoCylinder {
 		}
 		this.config = {...this.defaults, ...config}
 		// apply the default styles (NOTE: scant support)
-		//document.adoptedStyleSheets = [sheet];
+		//document.adoptedStyleSheets = [PhotoCylinderSheet];
 		// add the busy indicator
 		this.busy = new PhotoCylinderBusy(this.config.container);
 		// load the default asset
